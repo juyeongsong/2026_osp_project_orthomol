@@ -1,0 +1,17 @@
+body { margin: 0; font-family: sans-serif; }
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #263343;
+  padding: 12px 40px;
+}
+.navbar a { color: white; text-decoration: none; }
+.navbar__logo { font-size: 24px; font-weight: bold; }
+.navbar__menu { display: flex; list-style: none; margin: 0; padding: 0; }
+.navbar__menu li { padding: 8px 16px; }
+.navbar__menu li:hover { background-color: #3d5068; border-radius: 4px; }
+
+section { padding: 20px 40px; }
+section div { margin-bottom: 10px; }
