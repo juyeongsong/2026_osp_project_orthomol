@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>장바구니 | 이화 붕어빵</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='bungeo.css') }}"
+    />
+  </head>
+  <body>
+    <div class="page">
+      {% set page_title = '장바구니' %}
+      {% include '_awning.html' %}
+
+      <main class="cart">
+        <label class="select-all">
+          <input type="checkbox" id="select-all" class="check" />
+          <span>전체 선택</span>
+        </label>
+
+        <div class="cart__body">
+          <section class="cart__list" aria-label="장바구니 상품">
+            {% for item in items %}
+            <div
+              class="cart-row"
+              data-name="{{ item.name }}"
+              data-price="{{ item.price }}"
+            >
+              <input
+                type="checkbox"
+                class="check item-check"
+                checked
+                aria-label="{{ item.name }} 선택"
+              />
+              <article class="cart-item">
+                <button type="button" class="cart-item__remove" aria-label="{{ item.name }} 삭제">×</button>
+                <div class="cart-item__head">
+                  {% if item.img %}
+                  <img
+                    class="thumb"
+                    src="{{ url_for('static', filename='images/' + item.img) }}"
+                    alt=""
+                  />
+                  {% else %}
+                  <span class="thumb thumb--placeholder"></span>
+                  {% endif %}
+                  <div>
+                    <h2 class="cart-item__name">{{ item.name }}</h2>
+                    <p class="cart-item__price">{{ "{:,}".format(item.price) }}원</p>
+                  </div>
+                </div>
+                <div class="qty-bar">
+                  <div class="qty">
+                    <button type="button" class="qty__btn qty__btn--minus" aria-label="수량 줄이기">−</button>
+                    <span class="qty__num" aria-live="polite">{{ item.qty }}</span>
+                    <button type="button" class="qty__btn qty__btn--plus" aria-label="수량 늘리기">+</button>
+                  </div>
+                  <span class="line-total">{{ "{:,}".format(item.price * item.qty) }}원</span>
+                </div>
+              </article>
+            </div>
+            {% endfor %}
+            <p class="cart__empty" id="cart-empty" hidden>장바구니가 비어 있어요.</p>
+          </section>
+
+          <aside class="summary" data-fee="1500">
+            <div class="summary__card">
+            <h2 class="summary__title">주문예상금액</h2>
+            <ul class="summary__list" id="summary-list">
+              {% for item in items %}
+              <li>
+                <span>{{ item.name }}</span>
+                <span class="summary__qty">× {{ item.qty }}</span>
+                <span class="summary__amount">{{ "{:,}".format(item.price * item.qty) }}원</span>
+              </li>
+              {% endfor %}
+            </ul>
+            <dl class="summary__row summary__row--fee">
+              <dt>배송비</dt>
+              <dd id="fee">1,500원</dd>
+            </dl>
+            <dl class="summary__row summary__row--total">
+              <dt>총 결제 금액</dt>
+              <dd id="total">4,000원</dd>
+            </dl>
+            </div>
+            <button type="button" class="btn btn--primary btn--wide" id="order">주문하기</button>
+          </aside>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <strong>문의 상담 | 이화 붕어빵</strong> 02) 2525-2523
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,4 +1,107 @@
-{% extends "index.html" %}
-{% block section %}
-<p>This is the page that registers a review.</p>
-{% endblock section %}
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>후기 작성 | 이화 붕어빵</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='bungeo.css') }}"
+    />
+  </head>
+  <body>
+    <div class="page">
+      {% set page_title = '후기 작성' %}
+      {% include '_awning.html' %}
+
+      <main>
+        <form
+          class="review-card"
+          action="/submit_review_post"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <div class="field span-5">
+            <label for="user-id">아이디</label>
+            <input type="text" id="user-id" name="id" required />
+          </div>
+
+          <div class="field span-7">
+            <label for="product">상품명</label>
+            <input
+              type="text"
+              id="product"
+              name="product"
+              placeholder="예) 팥 붕어빵"
+              required
+            />
+          </div>
+
+          <div class="field span-8">
+            <label for="title">제목</label>
+            <input type="text" id="title" name="title" required />
+          </div>
+
+          <fieldset class="field span-4 stars">
+            <legend>별점</legend>
+            <div class="stars__row">
+              <input type="radio" id="star5" name="rating" value="5" required />
+              <label for="star5" title="5점">★</label>
+              <input type="radio" id="star4" name="rating" value="4" />
+              <label for="star4" title="4점">★</label>
+              <input type="radio" id="star3" name="rating" value="3" />
+              <label for="star3" title="3점">★</label>
+              <input type="radio" id="star2" name="rating" value="2" />
+              <label for="star2" title="2점">★</label>
+              <input type="radio" id="star1" name="rating" value="1" />
+              <label for="star1" title="1점">★</label>
+            </div>
+          </fieldset>
+
+          <div class="field span-8">
+            <label for="content">내용</label>
+            <textarea
+              id="content"
+              name="content"
+              placeholder="맛, 식감 등 솔직한 후기를 남겨주세요!"
+              required
+            ></textarea>
+          </div>
+
+          <div class="field span-4">
+            <span class="field__label" id="photo-label">사진 추가</span>
+            <label class="dropzone" for="photo" aria-labelledby="photo-label">
+              <span class="dropzone__text">
+                클릭해서 사진 업로드<br />(JPG, PNG)
+              </span>
+              <img class="dropzone__preview" alt="선택한 사진 미리보기" hidden />
+            </label>
+            <input
+              type="file"
+              id="photo"
+              name="file_input"
+              accept="image/jpeg,image/png"
+              class="sr-only"
+            />
+          </div>
+
+          <div class="actions span-12">
+            <button type="button" class="btn btn--ghost" id="cancel">취소</button>
+            <button type="submit" class="btn btn--primary">등록하기</button>
+          </div>
+        </form>
+      </main>
+
+      <footer class="footer">
+        <strong>문의 상담 | 이화 붕어빵</strong> 02) 2525-2523
+      </footer>
+    </div>
+  </body>
+</html>
+
