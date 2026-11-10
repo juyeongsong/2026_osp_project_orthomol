@@ -3,35 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>이화붕어빵</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
+    <title>{% block title %}이화붕어빵{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <script src="{{ url_for('static', filename='main.js') }}" defer></script>
   </head>
   <body>
     <nav class="navbar">
       <div class="navbar__logo">
-        <a href="{{ url_for('list_products')}}">이화붕어빵</a>
+        <a href="{{ url_for('list_products') }}">이화붕어빵</a>
       </div>
       <ul class="navbar__menu">
         {% if session['id'] %}
-        <li>
-          <a href="/logout"><b>Hello, {{ session['id']}}! </b> Logout</a>
-        </li>
+        <li><a href="/logout"><b>Hello, {{ session['id'] }}!</b> Logout</a></li>
         {% else %}
         <li><a href="/login">Login</a></li>
         {% endif %}
-        <li><a href="{{url_for('list_products')}}">List</a></li>
+        <li><a href="{{ url_for('list_products') }}">List</a></li>
         <li><a href="/review">Review</a></li>
         <li><a href="/reg_items">Register Items</a></li>
         <li><a href="/reg_reviews">Register Reviews</a></li>
       </ul>
     </nav>
     <section>
-      {% block section %} {% endblock section %} {% block content %} {% endblock
-      content %}
+      {% block section %}{% endblock section %}
+      {% block content %}{% endblock content %}
     </section>
   </body>
 </html>

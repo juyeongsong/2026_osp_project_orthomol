@@ -24,63 +24,6 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 PER_PAGE = 4
 
-SELLER_ID = "ewha_bep"
-ADDRESS = "서울특별시 서대문구 이화여대길52"
-EMAIL = "ewhabep@ewha.ac.kr"
-
-PRODUCTS = [
-    {
-        "id": 1,
-        "name": "팥 붕어빵",
-        "price": 500,
-        "status": "판매 중",
-        "image": "redbean.png"
-    },
-    {
-        "id": 2,
-        "name": "슈크림 붕어빵",
-        "price": 500,
-        "status": "판매 중",
-        "image": "cream.png"
-    },
-    {
-        "id": 3,
-        "name": "말차 붕어빵",
-        "price": 800,
-        "status": "준비 중",
-        "image": "matcha.png"
-    },
-    {
-        "id": 4,
-        "name": "고구마 붕어빵",
-        "price": 800,
-        "status": "판매 중",
-        "image": "sweetPotato.png"
-    },
-    {
-        "id": 5,
-        "name": "딸기슈크림 붕어빵",
-        "price": 1000,
-        "status": "품절",
-        "image": "strawberry.png"
-    },
-    {
-        "id": 6,
-        "name": "피자 붕어빵",
-        "price": 1000,
-        "status": "판매 중",
-        "image": "pizza.png"
-    },
-]
-
-for p in PRODUCTS:
-    p.update(
-        seller=SELLER_ID,
-        address=ADDRESS,
-        email=EMAIL
-    )
-
-
 @app.route("/")
 def hello():
     return render_template("index.html")
@@ -147,9 +90,12 @@ def register_user():
 def list_products():
     page = request.args.get("page", 1, type=int)
 
+    data = DB.get_items() or {}
+    items = sorted(data.items(), key=lambda kv: (int(kv[1]["price"]), kv[0])) 
+
     total_pages = max(
         1,
-        -(-len(PRODUCTS) // PER_PAGE)
+        -(-len(items) // PER_PAGE)
     )
 
     page = min(
@@ -158,7 +104,7 @@ def list_products():
     )
 
     start = (page - 1) * PER_PAGE
-    items = PRODUCTS[start:start + PER_PAGE]
+    items = items[start:start + PER_PAGE]
 
     return render_template(
         "list.html",
@@ -167,22 +113,12 @@ def list_products():
         total_pages=total_pages
     )
 
-
-@app.route("/product/<int:product_id>")
-def product_detail(product_id):
-    product = next(
-        (p for p in PRODUCTS if p["id"] == product_id),
-        None
-    )
-
-    if product is None:
+@app.route("/view_detail/<name>")
+def view_item_detail(name):
+    data = DB.get_item_byname(name)
+    if not data:
         abort(404)
-
-    return render_template(
-        "detail.html",
-        p=product
-    )
-
+    return render_template("detail.html", name=name, p=data)
 
 @app.route("/review")
 def view_review():

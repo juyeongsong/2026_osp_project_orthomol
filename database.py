@@ -59,4 +59,10 @@ class DBhandler:
                 return value
             
         return None
+    
+    def get_items(self):
+        return self.db.child("item").get().val()
+    
+    def get_item_byname(self, name):
+        return self.db.child("item").child(name).get().val()
 
