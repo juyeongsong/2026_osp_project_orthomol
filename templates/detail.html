@@ -1,0 +1,18 @@
+{% extends "index.html" %} {% block title %}{{ p.name }} - 이화 붕어빵{%
+endblock %} {% block content %}
+<div class="detail">
+  <img
+    src="{{ url_for('static', filename='images/' + p.image) }}"
+    alt="{{ p.name }}"
+  />
+  <ul>
+    <li>상품명: {{ p.name }}</li>
+    <li>판매자 ID: {{ p.seller }}</li>
+    <li>가격: {{ "{:,}".format(p.price) }}원</li>
+    <li>주소: {{ p.address }}</li>
+    <li>상태: {{ p.status }}</li>
+    <li>이메일: {{ p.email }}</li>
+  </ul>
+  <a href="{{ url_for('list_products') }}">&larr; 목록으로</a>
+</div>
+{% endblock %}
