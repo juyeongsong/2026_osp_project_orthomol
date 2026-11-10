@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for, ses
 from database import DBhandler
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "helloosp"
+app.config["SECRET_KEY"] = "for_test"
 DB = DBhandler()
 
 UPLOAD_DIR = os.path.join(app.root_path, "static", "images")
@@ -18,6 +18,29 @@ def hello():
 @app.route("/login")
 def login():
     return render_template("login.html")
+
+@app.route("/login_confirm", methods=["POST"])
+def login_confirm():
+    id = request.form["id"]
+    pw = request.form["pw"]
+
+    user = DB.get_user_by_id(id)
+
+    pw_hash = hashlib.sha256(
+        pw.encode("utf-8")
+    ).hexdigest()
+
+    if user is not None and user["pw"] == pw_hash:
+        session["id"] =id
+        return redirect(url_for("hello"))
+    else: 
+        flash("Wrong ID or PW!")
+        return redirect(url_for("login"))
+    
+@app.route("/logout")
+def logout():
+    session.pop("id", None)
+    return redirect(url_for("hello"))
 
 @app.route("/signup")
 def signup():
