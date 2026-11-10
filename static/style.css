@@ -1,227 +1,100 @@
-@font-face {
-  font-family: "okdandan";
-  src: url("/static/fonts/okdandan.otf") format("opentype");
+body {
+  margin: 0;
+  font-family: sans-serif;
 }
 
-* {
-  box-sizing: border-box;
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #263343;
+  padding: 12px 40px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+}
+
+.navbar__logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.navbar__menu {
+  display: flex;
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-body {
-  font-family: "Inter", sans-serif;
-  background-color: #fff184;
-  color: #000;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+.navbar__menu li {
+  padding: 8px 16px;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.site-logo {
-  position: absolute;
-  left: 80px;
-  top: 130px;
-  transform: translateY(-50%);
-  z-index: 10;
-}
-
-.site-logo img {
-  width: 250px;
-  height: auto;
-  display: block;
-}
-
-.home-btn {
-  position: absolute;
-  right: 140px;
-  top: 50px;
-  transform: traslateY(-50%);
-  z-index: 10;
-}
-
-.home-btn img {
-  width: 55px;
-  height: auto;
-  display: block;
-}
-
-.awning {
-  display: flex;
-  width: 100%;
-  height: 130px;
-  overflow: visible;
-}
-
-.awning_piece {
-  flex: 1;
-  height: 130px;
-  position: relative;
-}
-
-.awning_piece::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -70px;
-  width: 100%;
-  height: 120px;
-  background: inherit;
-  border-radius: 0 0 100% 100%;
-  box-shadow: 0 8px 10px rgba(68, 78, 63, 0.2);
-}
-
-.awning_piece:nth-child(odd) {
-  background-color: #00640f;
-}
-
-.awning_piece:nth-child(even) {
-  background-color: #fbffe5;
+.navbar__menu li:hover {
+  background-color: #3d5068;
+  border-radius: 4px;
 }
 
 section {
-  flex: 1;
+  padding: 20px 40px;
 }
 
-.site-footer {
-  padding: 24px 40px 20px;
-  background-color: #fff27d;
-  color: #006b2d;
-
-  font-size: 13px;
-  text-align: left;
+section div {
+  margin-bottom: 10px;
 }
 
-.page-title {
-  position: absolute;
-  top: 55px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: "okdandan", sans-serif;
-  font-size: 72px;
-  font-weight: 700;
+/* 상품 리스트 */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  color: #000;
-
-  text-shadow: -3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff,
-    3px 3px 0 #fff, 0px -3px 0 #fff, 0px 3px 0 #fff, -3px 0px 0 #fff,
-    3px 0px 0 #fff, 4px 5px 5px rgba(0, 0, 0, 0.18);
-
-  z-index: 10;
 }
 
-button,
-.btn {
-  padding: 10px 24px;
-  border: none;
-  border-radius: 24px;
-  background-color: #00640f;
-  color: white;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  cursor: pointer;
+.card .name {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 6px;
 }
 
-button:hover,
-.btn:hover {
-  background-color: #013409;
-}
-
-input,
-select,
-textarea {
-  padding: 10px 12px;
-  border: 1px solid #7b95b7;
-  border-radius: 8px;
-  background-color: #fff9d0;
-  font-family: "Inter", sans-serif;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-  border-color: #00640f;
-}
-
-.auth-container {
-  width: 100%;
-  max-width: 620px;
-  margin: 140px auto 60px;
-}
-
-.auth-form {
+.card a {
   display: flex;
-  flex-direction: column;
-  gap: 34px;
+  justify-content: center;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.card img {
+  max-width: 100%;
+  height: 250px;
+  object-fit: contain;
 }
 
-.form-group + .form-group {
-  margin-top: 25px;
+.pagination {
+  padding: 12px 0;
+  text-align: center;
+  font-size: 1.2em;
 }
 
-.form-group label {
-  font-family: "okdandan", sans-serif;
-  font-size: 30px;
-  font-weight: normal;
+.pagination a,
+.pagination strong {
+  margin-right: 8px;
 }
 
-.form-group input {
-  width: 100%;
-  height: 55px;
-  padding: 0 18px;
-
-  border: none;
-  border-radius: 14px;
-
-  background-attachment: #fffce8;
+.detail img {
+  width: 240px;
+  height: auto;
 }
 
-.signup-link {
-  display: flex;
-  justify-content: space-between;
-  align-item: center;
-  margin-top: 25px;
-
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.signup-link a {
-  text-decoration: underline;
-}
-
-.auth-btn {
-  width: 100%;
-  height: 60px;
-  border: none;
-  border-radius: 14px;
-  background-color: #006b2d;
-  color: white;
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.auth-container.signup-container {
-  margin-top: 105px;
-  margin-bottom: 40px;
-}
-
-.signup-container .auth-form {
-  gap: 20px;
-}
-
-.signup-container .form-group + .form-group {
-  margin-top: 5px;
+.detail ul {
+  list-style: none;
+  padding: 0;
+  line-height: 1.8;
 }

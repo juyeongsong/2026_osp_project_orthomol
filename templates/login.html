@@ -1,32 +1,27 @@
-{% extends "index.html" %} {% block section %}
+{% extends "index.html" %} {% block section %} {% with mesg =
+get_flashed_messages() %} {% if mesg != [] %}
+<script>
+  alert("{{mesg[0] }}");
+</script>
+{% endif %} {% endwith %}
 
-<h2 class="page-title">로그인</h2>
+<h2>로그인</h2>
 
-<div class="auth-container">
-  {% if error %}
-  <script>
-    alert("{{ error }}");
-  </script>
-  {% endif %}
+<form action="/login_confirm" method="post">
+  <p>
+    ID
+    <input type="text" name="id" required />
+  </p>
 
-  <form class="auth-form" action="/login_post" method="post">
-    <div class="form-group">
-      <label for="id">아이디</label>
-      <input type="text" id="id" name="id" required />
-    </div>
+  <p>
+    Password
+    <input typ="password" name="pw" required />
+  </p>
 
-    <div class="form-group">
-      <label for="pw">비밀번호</label>
-      <input type="password" id="pw" name="pw" required />
-    </div>
+  <p>
+    Input ID and password, and click the login button<br />
+    <input type="submit" value="Login" />
+  </p>
+</form>
 
-    <div class="signup-link">
-      <span>계정이 없으신가요?</span>
-      <a href="/signup">회원가입</a>
-    </div>
-
-    <button type="submit" class="auth-btn">로그인</button>
-  </form>
-</div>
-
-{% endblock section%}
+<button onclick="location.href='/signup'">Signup</button> {% endblock section%}

@@ -1,8 +1,10 @@
-{% extends "base.html" %}
-{% block title %}{{ p.name }} - 이화 붕어빵{% endblock %}
-{% block content %}
+{% extends "index.html" %} {% block title %}{{ p.name }} - 이화 붕어빵{%
+endblock %} {% block content %}
 <div class="detail">
-  <img src="{{ url_for('static', filename='images/' + p.image) }}" alt="{{ p.name }}">
+  <img
+    src="{{ url_for('static', filename='images/' + p.image) }}"
+    alt="{{ p.name }}"
+  />
   <ul>
     <li>상품명: {{ p.name }}</li>
     <li>판매자 ID: {{ p.seller }}</li>

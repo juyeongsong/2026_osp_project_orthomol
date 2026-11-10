@@ -45,4 +45,18 @@ class DBhandler:
                     return False
                 
             return True
+        
+    def get_user_by_id(self, id_string):
+        users = self.db.child("user").get()
+
+        if str(users.val()) == "None":
+            return None
+        
+        for res in users.each():
+            value = res.val()
+
+            if value["id"] == id_string:
+                return value
+            
+        return None
 
