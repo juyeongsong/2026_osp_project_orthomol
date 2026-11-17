@@ -78,3 +78,18 @@ class DBhandler:
         }
         self.db.child("review").push(review_info)  # "review" 노드에 push()로 저장
         return True
+
+    # ---------- 후기 목록 / 상세 / 좋아요 (Team Practice 2, 3) ----------
+    def get_reviews(self):
+        return self.db.child("review").get().val()
+
+    def get_review_by_id(self, review_id):
+        return self.db.child("review").child(review_id).get().val()
+
+    def get_heart(self, user_id, review_id):
+        liked = self.db.child("review_like").child(user_id).child(review_id).get().val()
+        return liked == True
+
+    def set_heart(self, user_id, review_id, liked):
+        self.db.child("review_like").child(user_id).child(review_id).set(liked)
+        return liked
