@@ -14,6 +14,7 @@
     <li>상태: {{ p.status }}</li>
     <li>이메일: {{ p.email }}</li>
   </ul>
+  <a href="{{ url_for('reg_review', name=name) }}">후기 작성</a>
   <a href="{{ url_for('list_products') }}">&larr; 목록으로</a>
 </div>
 {% endblock %}
