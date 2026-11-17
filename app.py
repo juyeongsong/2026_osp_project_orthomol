@@ -10,7 +10,8 @@ from flask import (
     redirect,
     url_for,
     session,
-    abort
+    abort,
+    jsonify
 )
 from database import DBhandler
 
@@ -125,7 +126,49 @@ def view_item_detail(name):
 
 @app.route("/review")
 def view_review():
-    return render_template("review.html")
+    page = request.args.get("page", 1, type=int)
+
+    data = DB.get_reviews() or {}
+    reviews = sorted(data.items(), key=lambda kv: kv[0], reverse=True)
+
+    total_pages = max(1, -(-len(reviews) // PER_PAGE))
+    page = min(max(page, 1), total_pages)
+
+    start = (page - 1) * PER_PAGE
+    reviews = reviews[start:start + PER_PAGE]
+
+    return render_template(
+        "review.html",
+        reviews=reviews,
+        page=page,
+        total_pages=total_pages
+    )
+
+
+@app.route("/view_review_detail/<review_id>")
+def view_review_detail(review_id):
+    review = DB.get_review_by_id(review_id)
+    if not review:
+        abort(404)
+    return render_template(
+        "review_detail.html",
+        review_id=review_id,
+        review=review
+    )
+
+
+@app.route("/review_like/<review_id>", methods=["GET", "POST"])
+def review_like(review_id):
+    user_id = session.get("id")
+    if user_id is None:
+        return jsonify({"error": "Login required"}), 401
+
+    if request.method == "GET":
+        return jsonify({"liked": DB.get_heart(user_id, review_id)})
+
+    data = request.get_json()
+    saved = DB.set_heart(user_id, review_id, data["liked"])
+    return jsonify({"liked": saved})
 
 
 @app.route("/reg_items")
