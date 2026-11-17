@@ -1,4 +1,7 @@
-body { margin: 0; font-family: sans-serif; }
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
 
 .navbar {
   display: flex;
@@ -7,11 +10,91 @@ body { margin: 0; font-family: sans-serif; }
   background-color: #263343;
   padding: 12px 40px;
 }
-.navbar a { color: white; text-decoration: none; }
-.navbar__logo { font-size: 24px; font-weight: bold; }
-.navbar__menu { display: flex; list-style: none; margin: 0; padding: 0; }
-.navbar__menu li { padding: 8px 16px; }
-.navbar__menu li:hover { background-color: #3d5068; border-radius: 4px; }
 
-section { padding: 20px 40px; }
-section div { margin-bottom: 10px; }
+.navbar a {
+  color: white;
+  text-decoration: none;
+}
+
+.navbar__logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.navbar__menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar__menu li {
+  padding: 8px 16px;
+}
+
+.navbar__menu li:hover {
+  background-color: #3d5068;
+  border-radius: 4px;
+}
+
+section {
+  padding: 20px 40px;
+}
+
+section div {
+  margin-bottom: 10px;
+}
+
+/* 상품 리스트 */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card .name {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.card a {
+  display: flex;
+  justify-content: center;
+}
+
+.card img {
+  max-width: 100%;
+  height: 250px;
+  object-fit: contain;
+}
+
+.pagination {
+  padding: 12px 0;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.pagination a,
+.pagination strong {
+  margin-right: 8px;
+}
+
+.detail img {
+  width: 240px;
+  height: auto;
+}
+
+.detail ul {
+  list-style: none;
+  padding: 0;
+  line-height: 1.8;
+}

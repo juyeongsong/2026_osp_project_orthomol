@@ -45,4 +45,51 @@ class DBhandler:
                     return False
                 
             return True
+        
+    def get_user_by_id(self, id_string):
+        users = self.db.child("user").get()
 
+        if str(users.val()) == "None":
+            return None
+        
+        for res in users.each():
+            value = res.val()
+
+            if value["id"] == id_string:
+                return value
+            
+        return None
+    
+    def get_items(self):
+        return self.db.child("item").get().val()
+    
+    def get_item_byname(self, name):
+        return self.db.child("item").child(name).get().val()
+
+    # ---------- 후기 (Team Practice 1) ----------
+    def insert_review(self, data, img_path):
+        review_info = {
+            "title": data["title"],
+            "product": data["product"],
+            "rating": data["rating"],
+            "content": data["content"],
+            "user_id": data["id"],
+            "img_path": img_path
+        }
+        self.db.child("review").push(review_info)  # "review" 노드에 push()로 저장
+        return True
+
+    # ---------- 후기 목록 / 상세 / 좋아요 (Team Practice 2, 3) ----------
+    def get_reviews(self):
+        return self.db.child("review").get().val()
+
+    def get_review_by_id(self, review_id):
+        return self.db.child("review").child(review_id).get().val()
+
+    def get_heart(self, user_id, review_id):
+        liked = self.db.child("review_like").child(user_id).child(review_id).get().val()
+        return liked == True
+
+    def set_heart(self, user_id, review_id, liked):
+        self.db.child("review_like").child(user_id).child(review_id).set(liked)
+        return liked
