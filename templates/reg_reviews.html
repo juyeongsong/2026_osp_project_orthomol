@@ -1,9 +1,59 @@
 {% extends "index.html" %}
 {% block content %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/bungeo.css') }}"
-/>
+
+<style>
+  /* 별점 테두리(fieldset 기본 박스) 제거 */
+  .stars {
+    border: none;
+    padding: 0;
+    margin: 8px 0;
+  }
+
+  .stars legend {
+    padding: 0;
+    margin-bottom: 4px;
+  }
+
+  /* 5점->1점 순서를 왼쪽부터 1점->5점 순서로 표시 */
+  .stars__row {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    gap: 4px;
+  }
+
+  /* 동그란 라디오 버튼 숨김 */
+  .stars__row input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  /* 선택 전 기본 회색 별 */
+  .stars__row label {
+    font-size: 26px;
+    color: #cccccc;
+    cursor: pointer;
+    user-select: none;
+    line-height: 1;
+  }
+
+  /* 클릭해서 선택한 별점 노란색 표시 */
+  .stars__row input[type="radio"]:checked ~ label {
+    color: #ffb400;
+  }
+
+  /* 마우스를 올렸을 때 미리보기 노란색 표시 */
+  .stars__row:hover input[type="radio"]:checked ~ label {
+    color: #cccccc;
+  }
+
+  .stars__row:hover input[type="radio"] ~ label:hover,
+  .stars__row:hover input[type="radio"] ~ label:hover ~ label {
+    color: #ffb400;
+  }
+</style>
 
 <h1 class="page-title">후기 작성</h1>
 
