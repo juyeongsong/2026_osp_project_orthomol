@@ -1,4 +1,5 @@
 import os
+import uuid
 import hashlib
 
 from flask import (
@@ -23,6 +24,8 @@ UPLOAD_DIR = os.path.join(app.root_path, "static", "images")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 PER_PAGE = 4
+ALLOWED_IMG_EXT = {"png", "jpg", "jpeg"}
+
 
 @app.route("/")
 def hello():
@@ -130,9 +133,36 @@ def reg_item():
     return render_template("reg_items.html")
 
 
+# ---------- 후기 작성 (Team Practice 1) ----------
 @app.route("/reg_reviews")
 def reg_review():
-    return render_template("reg_reviews.html")
+    # 상품 상세의 "후기 작성" 버튼에서 ?name=상품명 으로 들어오면 상품명이 채워짐
+    return render_template(
+        "reg_reviews.html",
+        product=request.args.get("name", ""),
+        user_id=session.get("id")
+    )
+
+
+@app.route("/submit_review_post", methods=["POST"])
+def reg_review_submit_post():
+    data = request.form
+    image_file = request.files.get("file_input")
+
+    filename = ""
+    if image_file and image_file.filename:
+        ext = image_file.filename.rsplit(".", 1)[-1].lower() if "." in image_file.filename else ""
+        if ext not in ALLOWED_IMG_EXT:
+            flash("png, jpg 사진만 올릴 수 있어요.")
+            return redirect(url_for("reg_review", name=data.get("product", "")))
+
+        # 서버(static/images)에 사진 저장, DB에는 파일 이름만 저장
+        filename = f"review_{uuid.uuid4().hex[:12]}.{ext}"
+        image_file.save(os.path.join(UPLOAD_DIR, filename))
+
+    DB.insert_review(data, filename)
+
+    return redirect(url_for("view_review"))
 
 
 @app.route("/submit_item_post", methods=["POST"])
