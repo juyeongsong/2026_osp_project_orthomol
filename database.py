@@ -66,3 +66,15 @@ class DBhandler:
     def get_item_byname(self, name):
         return self.db.child("item").child(name).get().val()
 
+    # ---------- 후기 (Team Practice 1) ----------
+    def insert_review(self, data, img_path):
+        review_info = {
+            "title": data["title"],
+            "product": data["product"],
+            "rating": data["rating"],
+            "content": data["content"],
+            "user_id": data["id"],
+            "img_path": img_path
+        }
+        self.db.child("review").push(review_info)  # "review" 노드에 push()로 저장
+        return True
